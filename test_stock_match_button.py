@@ -38,8 +38,13 @@ def stock_value(i):
         return 0
 
 
+@pytest.fixture
+def close_driver():
+    yield
+    driver.quit()
+
+
 # Проверка соответствия наличия товара и возможности его добавить в корзину/избранные
-def test_case_match(stock):
+def test_case_match(stock, close_driver):
     for i in range(len(STOCK_VALUE)):
         assert stock_value(i) == BUTTON_CART_VALUE[i], 'Несоответствие наличия товара и возможности добавления в корзину'
-    driver.quit()

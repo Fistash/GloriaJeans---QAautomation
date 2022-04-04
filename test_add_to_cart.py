@@ -43,7 +43,13 @@ def add_to_cart():
         driver.get(base_uri)
 
 
-def test_case_add_to_cart(add_to_cart):
+@pytest.fixture
+def close_driver():
+    yield
+    driver.quit()
+
+
+
+def test_case_add_to_cart(add_to_cart, close_driver):
     for i in range(len(CHECK)):
         assert CHECK[i], f'Товар {i} не удалось добавить в корзину'
-    driver.quit()

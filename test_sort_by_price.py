@@ -22,10 +22,15 @@ def sort_by_price():
         data_price.append(float(all_items[i].get_attribute('innerText').split(' ')[0]))
 
 
-def test_case_sort(sort_by_price):
+@pytest.fixture
+def close_driver():
+    yield
+    driver.quit()
+
+
+def test_case_sort(sort_by_price, close_driver):
     k = 0
     for i in range(len(data_price)):
         k += 1
         for j in range(len(data_price) - k):
             assert data_price[i] <= data_price[k + j], f'Ошибка элемента {i}'
-    driver.quit()
