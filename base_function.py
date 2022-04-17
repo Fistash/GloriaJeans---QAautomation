@@ -132,35 +132,3 @@ def clear_cart(driver):
     driver.find_element(By.XPATH, '//div[@class="basket-block__clear"]').click()
     WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//button[@class="press-button press-button--red-style js-clear-basket"]')))
     driver.find_element(By.XPATH, '//button[@class="press-button press-button--red-style js-clear-basket"]').click()
-
-
-
-
-
-
-
-
-
-
-# Количество страниц в категории
-def pagination_info(driver):
-    try:
-        element_pagination = driver.find_element(By.XPATH, '//div[@class="js-listing-pagination-container"]')
-        quantity_of_pagination = int(element_pagination.get_attribute('innerText').split('\n')[-1])
-        return quantity_of_pagination, False
-    except BaseException as text:
-        if str(text)[9:24] == 'no such element':
-            print('Только одна страница')
-            return 2, True
-        elif str(text)[0:15] == 'invalid literal':
-            print('Только одна страница')
-            return 2, True
-        else:
-            print(f'Ошибка в блоке pagination_info: {str(text)}')
-
-
-# Количество товаров на странице
-def quantity_of_items_on_page(driver):
-    element_items = driver.find_elements(By.XPATH, '//div[@data-qa="product-block"]//div[@class="listing-item__info"]')
-    quantity_of_items = len(element_items)
-    return quantity_of_items
